@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------
+Test set: org.example.testRunner.runners
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 288.347 s <<< FAILURE! - in org.example.testRunner.runners
+org.example.testRunner.runners.runScenario  Time elapsed: 13.79 s  <<< FAILURE!
+java.lang.AssertionError: 
+The following asserts failed:
+	third assertion expected [https://demo.nopcommerce.com/] but found [https://demo.nopcommerce.com/login?returnurl=%2F]
+
+org.example.testRunner.runners.runScenario  Time elapsed: 12.396 s  <<< FAILURE!
+org.openqa.selenium.ElementClickInterceptedException: 
+element click intercepted: Element <img class="nivo-main-image" src="https://demo.nopcommerce.com/images/thumbs/0000079_banner_1.jpg" style="width: 1200px; height: 500px; overflow: hidden;"> is not clickable at point (951, 498). Other element would receive the click: <a href="http://demo.nopcommerce.com/" aria-label="" class="nivo-imageLink" style="display: block;">...</a>
+  (Session info: chrome=107.0.5304.107)
+Build info: version: '4.0.0', revision: '3a21814679'
+System info: host: 'DESKTOP-GVRGLVO', ip: '192.168.1.4', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_351'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [87367d11aea91f115f23c6eb4007fb3e, clickElement {id=e6f853cd-73d9-46cf-ba6a-776c6b7c7671}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 107.0.5304.107, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Memo\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:56886}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:56886/devtoo..., se:cdpVersion: 107.0.5304.107, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on WINDOWS (87367d11aea91f115f23c6eb4007fb3e)] -> css selector: div[id="nivo-slider"]>img[src="https://demo.nopcommerce.com/images/thumbs/0000079_banner_1.jpg"]]
+Session ID: 87367d11aea91f115f23c6eb4007fb3e
+
+org.example.testRunner.runners.runScenario  Time elapsed: 11.477 s  <<< FAILURE!
+java.lang.AssertionError: expected [ https://demo.nopcommerce.com/iphone-6] but found [https://demo.nopcommerce.com/]
+
+org.example.testRunner.runners.runScenario  Time elapsed: 12.466 s  <<< FAILURE!
+java.lang.AssertionError: expected [https://demo.nopcommerce.com/new-online-store-is-open] but found [https://demo.nopcommerce.com/news/rss/1]
+

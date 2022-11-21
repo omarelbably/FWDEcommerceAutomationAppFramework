@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="4" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="17" time="285.833">
+<testcase classname="F01_Register | users could register with new accounts" name="guest user could register with valid data successfully" time="24.365">
+<system-out><![CDATA[Given user go to register page..............................................passed
+When user select gender type................................................passed
+And user enter "automation" and "tester"....................................passed
+And user enter date of birth................................................passed
+And user enter email field..................................................passed
+And user fills Password fields "p@ssw0rd" "p@ssw0rd"........................passed
+And user clicks on register button..........................................passed
+Then success message is displayed...........................................passed
+]]></system-out>
+</testcase>
+<testcase classname="F02_Login | users could use login functionality to use their accounts" name="user could login with valid email and password" time="13.764">
+<failure message="The following asserts failed:&#10;&#9;third assertion expected [https://demo.nopcommerce.com/] but found [https://demo.nopcommerce.com/login?returnurl=%2F]" type="java.lang.AssertionError"><![CDATA[Given user go to login page.................................................passed
+When user login with "test@example.com" and "P@ssw0rd"......................passed
+And user press on login button..............................................passed
+Then user login to the system successfully..................................failed
+
+StackTrace:
+java.lang.AssertionError: The following asserts failed:
+	third assertion expected [https://demo.nopcommerce.com/] but found [https://demo.nopcommerce.com/login?returnurl=%2F]
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:47)
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:31)
+	at org.example.stepDefs.D02_loginStepDef.success(D02_loginStepDef.java:45)
+	at ✽.user login to the system successfully(file:///C:/Users/Memo/IdeaProjects/EcommerceAutomationProject/src/main/resources/features/F02_Login.feature:10)
+]]></failure>
+</testcase>
+<testcase classname="F02_Login | users could use login functionality to use their accounts" name="user could login with invalid email and password" time="12.827">
+<system-out><![CDATA[Given user go to login page.................................................passed
+When user login with "wrong@example.com" and "P@ssw0rd".....................passed
+And user press on login button..............................................passed
+Then user could not login to the system.....................................passed
+]]></system-out>
+</testcase>
+<testcase classname="F04_Search | users will be able to search for products with different parameters" name="user could search using product name" time="14.668">
+<system-out><![CDATA[When user clicks on search field............................................passed
+And user search with "book".................................................passed
+Then user could find "book" relative results................................passed
+]]></system-out>
+</testcase>
+<testcase classname="F04_Search | users will be able to search for products with different parameters" name="user could search using product name 2" time="14.311">
+<system-out><![CDATA[When user clicks on search field............................................passed
+And user search with "laptop"...............................................passed
+Then user could find "laptop" relative results..............................passed
+]]></system-out>
+</testcase>
+<testcase classname="F04_Search | users will be able to search for products with different parameters" name="user could search using product name 3" time="14.095">
+<system-out><![CDATA[When user clicks on search field............................................passed
+And user search with "nike".................................................passed
+Then user could find "nike" relative results................................passed
+]]></system-out>
+</testcase>
+<testcase classname="F04_Search | users will be able to search for products with different parameters" name="user could search using product name 4" time="18.972">
+<system-out><![CDATA[When user clicks on search field............................................passed
+And user search with "SCI_FAITH"............................................passed
+Then user could find "SCI_FAITH" inside product detail page.................passed
+]]></system-out>
+</testcase>
+<testcase classname="F04_Search | users will be able to search for products with different parameters" name="user could search using product name 5" time="16.851">
+<system-out><![CDATA[When user clicks on search field............................................passed
+And user search with "APPLE_CAM"............................................passed
+Then user could find "APPLE_CAM" inside product detail page.................passed
+]]></system-out>
+</testcase>
+<testcase classname="F04_Search | users will be able to search for products with different parameters" name="user could search using product name 6" time="16.545">
+<system-out><![CDATA[When user clicks on search field............................................passed
+And user search with "SF_PRO_11"............................................passed
+Then user could find "SF_PRO_11" inside product detail page.................passed
+]]></system-out>
+</testcase>
+<testcase classname="select random category from three hovarable categories" name="hover over categories" time="12.78">
+<system-out><![CDATA[When user hover category and select subcategory then check if the name equals to page title.passed
+And user go to subcategory page.............................................passed
+Then user check if page title equals subcategory name.......................passed
+]]></system-out>
+</testcase>
+<testcase classname="Check if the sliders are working" name="first slider is clickable on home page" time="12.387">
+<failure message="element click intercepted: Element &lt;img class=&quot;nivo-main-image&quot; src=&quot;https://demo.nopcommerce.com/images/thumbs/0000079_banner_1.jpg&quot; style=&quot;width: 1200px; height: 500px; overflow: hidden;&quot;&gt; is not clickable at point (951, 498). Other element would receive the click: &lt;a href=&quot;http://demo.nopcommerce.com/&quot; aria-label=&quot;&quot; class=&quot;nivo-imageLink&quot; style=&quot;display: block;&quot;&gt;...&lt;/a&gt;&#10;  (Session info: chrome=107.0.5304.107)&#10;Build info: version: '4.0.0', revision: '3a21814679'&#10;System info: host: 'DESKTOP-GVRGLVO', ip: '192.168.1.4', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_351'&#10;Driver info: org.openqa.selenium.chrome.ChromeDriver&#10;Command: [87367d11aea91f115f23c6eb4007fb3e, clickElement {id=e6f853cd-73d9-46cf-ba6a-776c6b7c7671}]&#10;Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 107.0.5304.107, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Memo\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:56886}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:56886/devtoo..., se:cdpVersion: 107.0.5304.107, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}&#10;Element: [[ChromeDriver: chrome on WINDOWS (87367d11aea91f115f23c6eb4007fb3e)] -&gt; css selector: div[id=&quot;nivo-slider&quot;]&gt;img[src=&quot;https://demo.nopcommerce.com/images/thumbs/0000079_banner_1.jpg&quot;]]&#10;Session ID: 87367d11aea91f115f23c6eb4007fb3e" type="org.openqa.selenium.ElementClickInterceptedException"><![CDATA[When clicking on the first slider...........................................failed
+Then check if u are rotated to nokia page...................................skipped
+
+StackTrace:
+org.openqa.selenium.ElementClickInterceptedException: element click intercepted: Element <img class="nivo-main-image" src="https://demo.nopcommerce.com/images/thumbs/0000079_banner_1.jpg" style="width: 1200px; height: 500px; overflow: hidden;"> is not clickable at point (951, 498). Other element would receive the click: <a href="http://demo.nopcommerce.com/" aria-label="" class="nivo-imageLink" style="display: block;">...</a>
+  (Session info: chrome=107.0.5304.107)
+Build info: version: '4.0.0', revision: '3a21814679'
+System info: host: 'DESKTOP-GVRGLVO', ip: '192.168.1.4', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_351'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [87367d11aea91f115f23c6eb4007fb3e, clickElement {id=e6f853cd-73d9-46cf-ba6a-776c6b7c7671}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 107.0.5304.107, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Memo\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:56886}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:56886/devtoo..., se:cdpVersion: 107.0.5304.107, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on WINDOWS (87367d11aea91f115f23c6eb4007fb3e)] -> css selector: div[id="nivo-slider"]>img[src="https://demo.nopcommerce.com/images/thumbs/0000079_banner_1.jpg"]]
+Session ID: 87367d11aea91f115f23c6eb4007fb3e
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:53)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:184)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:164)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:139)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:559)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:251)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:77)
+	at org.example.stepDefs.D06_homeSlidersStepDef.firstSlider(D06_homeSlidersStepDef.java:18)
+	at ✽.clicking on the first slider(file:///C:/Users/Memo/IdeaProjects/EcommerceAutomationProject/src/main/resources/features/F06_homeSliders.feature:4)
+]]></failure>
+</testcase>
+<testcase classname="Check if the sliders are working" name="second slider is clickable on home page" time="11.47">
+<failure message="expected [ https://demo.nopcommerce.com/iphone-6] but found [https://demo.nopcommerce.com/]" type="java.lang.AssertionError"><![CDATA[When clicking on the second slider..........................................passed
+Then check if u are rotated to iphone page..................................failed
+
+StackTrace:
+java.lang.AssertionError: expected [ https://demo.nopcommerce.com/iphone-6] but found [https://demo.nopcommerce.com/]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:140)
+	at org.testng.Assert.assertEquals(Assert.java:122)
+	at org.testng.Assert.assertEquals(Assert.java:629)
+	at org.testng.Assert.assertEquals(Assert.java:639)
+	at org.example.stepDefs.D06_homeSlidersStepDef.checkIfUAreRotatedToIphonePage(D06_homeSlidersStepDef.java:42)
+	at ✽.check if u are rotated to iphone page(file:///C:/Users/Memo/IdeaProjects/EcommerceAutomationProject/src/main/resources/features/F06_homeSliders.feature:9)
+]]></failure>
+</testcase>
+<testcase classname="check the follow us icons" name="Check facebook icon" time="22.192">
+<system-out><![CDATA[When clicking on the facebook icon..........................................passed
+Then verify the facebook url................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="check the follow us icons" name="Check twitter icon" time="16.804">
+<system-out><![CDATA[When clicking on the twitter icon...........................................passed
+Then verify the twitter url.................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="check the follow us icons" name="Check Rss icon" time="12.459">
+<failure message="expected [https://demo.nopcommerce.com/new-online-store-is-open] but found [https://demo.nopcommerce.com/news/rss/1]" type="java.lang.AssertionError"><![CDATA[When clicking on the Rss icon...............................................passed
+Then verify the Rss url.....................................................failed
+
+StackTrace:
+java.lang.AssertionError: expected [https://demo.nopcommerce.com/new-online-store-is-open] but found [https://demo.nopcommerce.com/news/rss/1]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:140)
+	at org.testng.Assert.assertEquals(Assert.java:122)
+	at org.testng.Assert.assertEquals(Assert.java:629)
+	at org.testng.Assert.assertEquals(Assert.java:639)
+	at org.example.stepDefs.D07_followUsStepDef.rssURL(D07_followUsStepDef.java:50)
+	at ✽.verify the Rss url(file:///C:/Users/Memo/IdeaProjects/EcommerceAutomationProject/src/main/resources/features/F07_followUs.feature:16)
+]]></failure>
+</testcase>
+<testcase classname="check the follow us icons" name="Check youtube icon" time="30.185">
+<system-out><![CDATA[When clicking on the youtube icon...........................................passed
+Then verify the youtube url.................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="check the wishlist button and quantity" name="put a product in wishlist and get its quantity" time="20.652">
+<system-out><![CDATA[When put a product to wishlist..............................................passed
+And check the success message...............................................passed
+And user go to wishlist page................................................passed
+Then check the product quantity.............................................passed
+]]></system-out>
+</testcase>
+</testsuite>
