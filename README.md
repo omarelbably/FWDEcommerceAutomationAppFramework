@@ -102,9 +102,8 @@ Integrate with CI/CD pipelines (GitHub Actions, Jenkins) ⚙️
 📢 Contact
 
 Omar Elbably
-📧 Email: [Your Email Here]
-🐦 Twitter: [@YourTwitterHandle]
-💼 LinkedIn: [YourLinkedInProfile]
+📧 Email: Omaroelbably@gmail.com
+💼 LinkedIn: https://www.linkedin.com/in/omaroelbably
 🌟 Show Your Support
 
 If you like this project, please ⭐ Star it and share it with others!
