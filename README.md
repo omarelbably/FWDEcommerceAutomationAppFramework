@@ -1,4 +1,3 @@
-
 🚀 FWDEcommerceAutomationApp
 
 Welcome to FWDEcommerceAutomationApp — your ultimate solution for automating E-commerce testing with power, precision, and speed! 🛒✨
@@ -22,16 +21,25 @@ FWDEcommerceAutomationApp is a robust automation framework designed to test and 
     🏗️ Scalable and easy to maintain
 
 🛠️ Tech Stack
+
 Technology	Purpose
+
 Java ☕	Programming Language
+
 Selenium WebDriver 🌐	Web Automation
+
 TestNG 🧪	Test Management
+
 Maven 📦	Build and Dependency Management
+
 ExtentReports 📊	Test Reporting
+
 Git/GitHub 🐙	Version Control
+
 🚀 Getting Started
 
 Follow these steps to get the project up and running on your machine! 🖥️
+
 Prerequisites
 
     ✅ Java JDK 8+
@@ -63,14 +71,23 @@ mvn test
 📂 Project Structure
 
 FWDEcommerceAutomationApp/
+
 ├── src/main/java/
+
 │   ├── base/          # Base classes
+
 │   ├── pages/         # Page Object Models
+
 │   ├── utils/         # Utilities (helpers, listeners, etc.)
+
 ├── src/test/java/
+
 │   ├── tests/         # Test Cases
+
 ├── pom.xml            # Maven Config File
+
 ├── testng.xml         # TestNG Suite Config
+
 └── README.md          # Project Documentation
 
 🧩 How to Contribute
