@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 import java.util.List;
@@ -15,11 +16,14 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected Logger logger;
+    protected Actions actions;
+    protected String baseUrl = "https://demo.nopcommerce.com";
     
     public BasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         this.logger = LoggerFactory.getLogger(this.getClass());
+        this.actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
     
@@ -41,7 +45,7 @@ public abstract class BasePage {
     }
     
     // Common interaction methods
-    protected void clickElement(WebElement element) {
+    public void clickElement(WebElement element) {
         try {
             waitForElementToBeClickable(element);
             element.click();
@@ -52,7 +56,7 @@ public abstract class BasePage {
         }
     }
     
-    protected void sendKeysToElement(WebElement element, String text) {
+    public void sendKeysToElement(WebElement element, String text) {
         try {
             waitForElementToBeVisible(element);
             element.clear();
@@ -64,7 +68,7 @@ public abstract class BasePage {
         }
     }
     
-    protected String getElementText(WebElement element) {
+    public String getElementText(WebElement element) {
         try {
             waitForElementToBeVisible(element);
             String text = element.getText();
@@ -166,5 +170,14 @@ public abstract class BasePage {
     protected void refreshPage() {
         driver.navigate().refresh();
         waitForPageLoad();
+    }
+
+    // Add getBaseUrl method
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+    // Add waitForElementVisible method (alias for waitForElementToBeVisible)
+    public void waitForElementVisible(WebElement element) {
+        waitForElementToBeVisible(element);
     }
 } 

@@ -562,4 +562,14 @@ public class P03_homePage extends BasePage {
         // Placeholder implementation
         driver.get(getBaseUrl() + "/product/" + productIdentifier);
     }
+
+    public boolean isElementClickable(WebElement element) {
+        try {
+            new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(10))
+                .until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -19,7 +19,7 @@ public class D04_searchStepDef extends TestBase {
     @When("user clicks on search field")
     public void click_search() {
         logger.info("Clicking on search field");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickSearchField();
         logger.info("Search field clicked successfully");
     }

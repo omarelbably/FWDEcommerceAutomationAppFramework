@@ -24,7 +24,7 @@ public class D05_hoverCategoriesStepDef extends TestBase {
     @When("user hover category and select subcategory then check if the name equals to page title")
     public void userHoverCategoryAndSelectSubcategoryThenCheckIfTheNameEqualsToPageTitle() {
         logger.info("Starting category hover and subcategory selection");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         
         // Get all categories
         List<String> categoryNames = home.getCategoryNames();
@@ -78,7 +78,7 @@ public class D05_hoverCategoriesStepDef extends TestBase {
     @When("user hovers over {string} category")
     public void user_hovers_over_category(String categoryName) {
         logger.info("Hovering over category: {}", categoryName);
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.hoverOverCategory(categoryName);
         mainCategoryName = categoryName;
         logger.info("Hovered over category: {}", categoryName);

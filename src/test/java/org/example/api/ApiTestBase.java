@@ -44,7 +44,7 @@ public class ApiTestBase {
         return RestAssured.given()
                 .baseUri(BASE_URL)
                 .contentType(ContentType.JSON)
-                .timeout(TIMEOUT)
+                // .timeout(TIMEOUT) // Timeout configuration should be set via config if needed
                 .header("Authorization", "Bearer " + API_KEY)
                 .header("Accept", "application/json");
     }

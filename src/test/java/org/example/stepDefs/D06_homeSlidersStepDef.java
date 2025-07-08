@@ -7,6 +7,7 @@ import org.example.pages.P03_homePage;
 import org.testng.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.example.stepDefs.Hooks;
 
 public class D06_homeSlidersStepDef extends TestBase {
     
@@ -16,7 +17,7 @@ public class D06_homeSlidersStepDef extends TestBase {
     @When("clicking on the first slider")
     public void firstSlider() {
         logger.info("Clicking on the first slider");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickFirstSlider();
         logger.info("First slider clicked successfully");
     }
@@ -40,7 +41,7 @@ public class D06_homeSlidersStepDef extends TestBase {
     @When("clicking on the second slider")
     public void clickingOnTheSecondSlider() {
         logger.info("Clicking on the second slider");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickSecondSlider();
         logger.info("Second slider clicked successfully");
     }
@@ -64,7 +65,7 @@ public class D06_homeSlidersStepDef extends TestBase {
     @When("user waits for slider to be visible")
     public void user_waits_for_slider_to_be_visible() {
         logger.info("Waiting for slider to be visible");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.waitForSliderToBeVisible();
         logger.info("Slider is now visible");
     }

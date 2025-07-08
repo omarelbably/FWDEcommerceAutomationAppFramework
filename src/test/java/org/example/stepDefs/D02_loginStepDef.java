@@ -24,7 +24,7 @@ public class D02_loginStepDef extends TestBase {
     @Given("user go to login page")
     public void user_open_browser() {
         logger.info("Navigating to login page");
-        login = new P02_login(driver);
+        login = new P02_login(Hooks.getStaticDriver());
         login.navigateToLoginPage();
         logger.info("Successfully navigated to login page");
     }

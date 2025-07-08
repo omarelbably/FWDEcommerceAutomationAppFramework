@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.example.stepDefs.Hooks;
 
 public class D08_WishlistStepDef extends TestBase {
     
@@ -18,7 +19,7 @@ public class D08_WishlistStepDef extends TestBase {
     @When("put a product to wishlist")
     public void wishlistAnItem() {
         logger.info("Adding product to wishlist");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickWishlistButton();
         logger.info("Product added to wishlist successfully");
     }
@@ -76,7 +77,7 @@ public class D08_WishlistStepDef extends TestBase {
     @When("user adds multiple products to wishlist")
     public void user_adds_multiple_products_to_wishlist() {
         logger.info("Adding multiple products to wishlist");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         
         // Add first product
         home.clickWishlistButton();
@@ -104,7 +105,7 @@ public class D08_WishlistStepDef extends TestBase {
     @When("user removes product from wishlist")
     public void user_removes_product_from_wishlist() {
         logger.info("Removing product from wishlist");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickWishlistPage();
         home.removeProductFromWishlist();
         logger.info("Product removed from wishlist");

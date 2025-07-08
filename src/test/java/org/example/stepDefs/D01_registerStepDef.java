@@ -24,7 +24,7 @@ public class D01_registerStepDef extends TestBase {
     @Given("user go to register page")
     public void go_to_registerPage() {
         logger.info("Navigating to registration page");
-        register = new P01_register(driver);
+        register = new P01_register(Hooks.getStaticDriver());
         userData = TestDataManager.generateUserData();
         
         // Cache the user data for potential reuse

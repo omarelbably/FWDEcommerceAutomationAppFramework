@@ -20,7 +20,7 @@ public class D03_currenciesStepDef extends TestBase {
     @When("user select euro option")
     public void select_euro() {
         logger.info("Selecting Euro currency");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.selectCurrency("Euro");
         logger.info("Euro currency selected successfully");
     }
@@ -28,7 +28,7 @@ public class D03_currenciesStepDef extends TestBase {
     @When("user select dollar option")
     public void select_dollar() {
         logger.info("Selecting Dollar currency");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.selectCurrency("US Dollar");
         logger.info("Dollar currency selected successfully");
     }
@@ -36,7 +36,7 @@ public class D03_currenciesStepDef extends TestBase {
     @When("user select pound option")
     public void select_pound() {
         logger.info("Selecting Pound currency");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.selectCurrency("British pound");
         logger.info("Pound currency selected successfully");
     }

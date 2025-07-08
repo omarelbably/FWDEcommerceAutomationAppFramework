@@ -32,53 +32,17 @@ public class Java21Examples {
     // Record for test results
     public record TestResult(String testName, String status, long duration, String message) {}
     
-    // Simple data classes for different types of test data
-    public static class UserTestData {
-        private final String firstName;
-        private final String lastName;
-        private final String email;
-        
-        public UserTestData(String firstName, String lastName, String email) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-        }
-        
+    // Sealed interface for test data types
+    public sealed interface TestData permits UserTestData, ProductTestData, SearchTestData {}
+    // Refactored to records for deconstruction patterns
+    public record UserTestData(String firstName, String lastName, String email) implements TestData {
         public String getType() { return "USER"; }
-        public String getFirstName() { return firstName; }
-        public String getLastName() { return lastName; }
-        public String getEmail() { return email; }
     }
-    
-    public static class ProductTestData {
-        private final String name;
-        private final String category;
-        private final double price;
-        
-        public ProductTestData(String name, String category, double price) {
-            this.name = name;
-            this.category = category;
-            this.price = price;
-        }
-        
+    public record ProductTestData(String name, String category, double price) implements TestData {
         public String getType() { return "PRODUCT"; }
-        public String getName() { return name; }
-        public String getCategory() { return category; }
-        public double getPrice() { return price; }
     }
-    
-    public static class SearchTestData {
-        private final String term;
-        private final String category;
-        
-        public SearchTestData(String term, String category) {
-            this.term = term;
-            this.category = category;
-        }
-        
+    public record SearchTestData(String term, String category) implements TestData {
         public String getType() { return "SEARCH"; }
-        public String getTerm() { return term; }
-        public String getCategory() { return category; }
     }
     
     /**

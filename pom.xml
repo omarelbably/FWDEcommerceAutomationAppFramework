@@ -19,6 +19,7 @@
         <allure.version>2.24.0</allure.version>
         <logback.version>1.4.14</logback.version>
         <jackson.version>2.16.0</jackson.version>
+        <aspectj.version>1.9.21</aspectj.version>
     </properties>
 
     <build>
@@ -187,12 +188,14 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Applitools for visual testing -->
+        <!-- Applitools for visual testing - temporarily commented out due to dependency issues -->
+        <!--
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-selenium-java4</artifactId>
             <version>5.66.0</version>
         </dependency>
+        -->
 
         <!-- Performance testing dependencies -->
         <dependency>

@@ -1,0 +1,7 @@
+file:src/main/resources/features/F04_Search.feature:10:11:12:21:22:23
+file:src/main/resources/features/F07_followUs.feature:5:9:14:18
+file:src/main/resources/features/F02_Login.feature:6:13
+file:src/main/resources/features/F08_Wishlist.feature:4
+file:src/main/resources/features/F05_hoverCategories.feature:3
+file:src/main/resources/features/F01_Register.feature:3
+file:src/main/resources/features/F06_homeSliders.feature:3:7

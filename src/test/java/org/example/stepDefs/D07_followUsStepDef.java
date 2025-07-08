@@ -16,7 +16,7 @@ public class D07_followUsStepDef extends TestBase {
     @When("clicking on the facebook icon")
     public void facebookIcon() {
         logger.info("Clicking on Facebook icon");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickFacebookIcon();
         home.switchToNewTab();
         logger.info("Facebook icon clicked and new tab opened");
@@ -41,7 +41,7 @@ public class D07_followUsStepDef extends TestBase {
     @When("clicking on the twitter icon")
     public void clickingOnTheTwitterIcon() {
         logger.info("Clicking on Twitter icon");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickTwitterIcon();
         home.switchToNewTab();
         logger.info("Twitter icon clicked and new tab opened");
@@ -66,7 +66,7 @@ public class D07_followUsStepDef extends TestBase {
     @When("clicking on the Rss icon")
     public void clickingOnTheRssIcon() {
         logger.info("Clicking on RSS icon");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickRssIcon();
         logger.info("RSS icon clicked");
     }
@@ -90,7 +90,7 @@ public class D07_followUsStepDef extends TestBase {
     @When("clicking on the youtube icon")
     public void clickingOnTheYoutubeIcon() {
         logger.info("Clicking on YouTube icon");
-        home = new P03_homePage(driver);
+        home = new P03_homePage(Hooks.getStaticDriver());
         home.clickYoutubeIcon();
         home.switchToNewTab();
         logger.info("YouTube icon clicked and new tab opened");
