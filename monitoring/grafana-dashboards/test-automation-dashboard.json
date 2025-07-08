@@ -1,0 +1,347 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Test Automation Dashboard",
+    "tags": ["test-automation", "quality-assurance"],
+    "style": "dark",
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Test Execution Overview",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "test_executions_total",
+            "legendFormat": "Total Tests"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "displayMode": "list"
+            }
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 2,
+        "title": "Test Results by Status",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "test_results_total{status=\"passed\"}",
+            "legendFormat": "Passed"
+          },
+          {
+            "expr": "test_results_total{status=\"failed\"}",
+            "legendFormat": "Failed"
+          },
+          {
+            "expr": "test_results_total{status=\"skipped\"}",
+            "legendFormat": "Skipped"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Test Execution Time Trend",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "test_execution_duration_seconds",
+            "legendFormat": "Execution Time"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 8
+        }
+      },
+      {
+        "id": 4,
+        "title": "Performance Metrics",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "page_load_time_seconds",
+            "legendFormat": "Page Load Time"
+          },
+          {
+            "expr": "api_response_time_seconds",
+            "legendFormat": "API Response Time"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 3
+                },
+                {
+                  "color": "red",
+                  "value": 5
+                }
+              ]
+            }
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 16
+        }
+      },
+      {
+        "id": 5,
+        "title": "Cache Performance",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "cache_hit_ratio",
+            "legendFormat": "Cache Hit Ratio"
+          },
+          {
+            "expr": "cache_miss_ratio",
+            "legendFormat": "Cache Miss Ratio"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 16
+        }
+      },
+      {
+        "id": 6,
+        "title": "Test Execution by Browser",
+        "type": "barchart",
+        "targets": [
+          {
+            "expr": "test_executions_total",
+            "legendFormat": "{{browser}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 24
+        }
+      },
+      {
+        "id": 7,
+        "title": "Test Execution by Feature",
+        "type": "barchart",
+        "targets": [
+          {
+            "expr": "test_executions_total",
+            "legendFormat": "{{feature}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 24
+        }
+      },
+      {
+        "id": 8,
+        "title": "Error Rate Trend",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(test_failures_total[5m])",
+            "legendFormat": "Error Rate"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 32
+        }
+      },
+      {
+        "id": 9,
+        "title": "Visual Test Results",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "visual_test_results_total{result=\"passed\"}",
+            "legendFormat": "Visual Tests Passed"
+          },
+          {
+            "expr": "visual_test_results_total{result=\"failed\"}",
+            "legendFormat": "Visual Tests Failed"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 40
+        }
+      },
+      {
+        "id": 10,
+        "title": "API Test Results",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "api_test_results_total{status=\"passed\"}",
+            "legendFormat": "API Tests Passed"
+          },
+          {
+            "expr": "api_test_results_total{status=\"failed\"}",
+            "legendFormat": "API Tests Failed"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 40
+        }
+      },
+      {
+        "id": 11,
+        "title": "Test Execution Queue",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "test_queue_length",
+            "legendFormat": "Queue Length"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 10
+                },
+                {
+                  "color": "red",
+                  "value": 20
+                }
+              ]
+            }
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 48
+        }
+      },
+      {
+        "id": 12,
+        "title": "Test Execution Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(test_executions_total[5m])",
+            "legendFormat": "Tests/sec"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "reqps"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 48
+        }
+      },
+      {
+        "id": 13,
+        "title": "Success Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "test_success_rate",
+            "legendFormat": "Success Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 80
+                },
+                {
+                  "color": "green",
+                  "value": 95
+                }
+              ]
+            }
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 48
+        }
+      }
+    ],
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "refresh": "30s"
+  }
+} 

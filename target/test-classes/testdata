@@ -1,0 +1,18 @@
+# Test Data Directory Structure
+# This directory contains test data files for different test scenarios
+
+# Structure:
+# ├── users/
+# │   ├── valid_users.json
+# │   ├── invalid_users.json
+# │   └── admin_users.json
+# ├── products/
+# │   ├── electronics.json
+# │   ├── clothing.json
+# │   └── books.json
+# ├── orders/
+# │   ├── valid_orders.json
+# │   └── invalid_orders.json
+# └── api/
+#     ├── endpoints.json
+#     └── schemas.json 

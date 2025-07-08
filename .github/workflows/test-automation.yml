@@ -1,0 +1,236 @@
+name: Test Automation Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+
+jobs:
+  # Unit Tests
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Run Unit Tests
+        run: mvn test -Dtest=*UnitTest
+        
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: unit-test-results
+          path: target/surefire-reports/
+
+  # Integration Tests
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+        tags: [@smoke, @regression]
+        
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Start Selenium Grid
+        run: |
+          docker-compose up -d selenium-hub chrome-node firefox-node
+          sleep 30
+          
+      - name: Run Integration Tests
+        run: |
+          mvn test -Dcucumber.filter.tags="${{ matrix.tags }}" \
+                   -Dbrowser="${{ matrix.browser }}" \
+                   -Dselenium.grid.url=http://localhost:4444
+          
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: integration-test-results-${{ matrix.browser }}-${{ matrix.tags }}
+          path: target/allure-results/
+
+  # API Tests
+  api-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          
+      - name: Run API Tests
+        run: mvn test -Dcucumber.filter.tags="@api"
+        env:
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
+          
+      - name: Upload API Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-test-results
+          path: target/allure-results/
+
+  # Performance Tests
+  performance-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          
+      - name: Run Performance Tests
+        run: mvn test -Dcucumber.filter.tags="@performance"
+        
+      - name: Generate Performance Report
+        run: |
+          echo "Performance Test Results:" > performance-report.txt
+          echo "=========================" >> performance-report.txt
+          # Add performance metrics to report
+          
+      - name: Upload Performance Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-report
+          path: performance-report.txt
+
+  # Visual Tests
+  visual-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          
+      - name: Run Visual Tests
+        run: mvn test -Dcucumber.filter.tags="@visual"
+        env:
+          APPLITOOLS_API_KEY: ${{ secrets.APPLITOOLS_API_KEY }}
+          
+      - name: Upload Visual Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: visual-test-results
+          path: target/allure-results/
+
+  # Generate Reports
+  generate-reports:
+    runs-on: ubuntu-latest
+    needs: [integration-tests, api-tests, performance-tests, visual-tests]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download All Test Results
+        uses: actions/download-artifact@v3
+        with:
+          path: target/allure-results/
+          
+      - name: Generate Allure Report
+        run: |
+          mvn allure:report
+          
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: target/allure-reports/
+
+  # Security Scan
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'E-commerce Test Automation'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+          
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-report
+          path: reports/
+
+  # Docker Build and Test
+  docker-test:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Docker Image
+        run: docker build -t ecommerce-test-automation .
+        
+      - name: Run Tests in Docker
+        run: |
+          docker-compose up -d
+          docker-compose run test-automation mvn test -Dcucumber.filter.tags="@smoke"
+          
+      - name: Upload Docker Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-test-results
+          path: target/allure-results/
+
+  # Notify Results
+  notify:
+    runs-on: ubuntu-latest
+    needs: [generate-reports, security-scan, docker-test]
+    if: always()
+    steps:
+      - name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#test-automation'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} 

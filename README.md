@@ -1,130 +1,310 @@
-🚀 FWDEcommerceAutomationApp
+# E-commerce Test Automation Framework
 
-Welcome to FWDEcommerceAutomationApp — your ultimate solution for automating E-commerce testing with power, precision, and speed! 🛒✨
+A robust, scalable Selenium Cucumber test automation framework for e-commerce applications with modern best practices and comprehensive reporting.
 
-    ⚡ Built to make automated testing for E-commerce platforms faster, smarter, and more reliable!
+## 🚀 Features
 
-📚 About the Project
+- **Modern Selenium 4.16+** with WebDriverManager for automatic driver management
+- **Cucumber 7.15+** for BDD testing with enhanced reporting
+- **TestNG 7.8+** for test execution with parallel support
+- **Java 21** with modern language features (switch expressions, pattern matching)
+- **Allure Reporting** for beautiful, interactive test reports
+- **Multi-browser support** (Chrome, Firefox, Edge)
+- **Parallel execution** for faster test runs
+- **Comprehensive logging** with Logback
+- **Automatic screenshots** on test failures
+- **Test data management** with Faker library
+- **Configuration management** with properties files
+- **Page Object Model** with enhanced base classes
+- **Retry mechanism** for flaky tests
+- **CI/CD ready** with Maven
 
-FWDEcommerceAutomationApp is a robust automation framework designed to test and validate E-commerce functionalities — from login flows to checkout processes — ensuring a seamless customer experience every time.
+## 📁 Project Structure
 
-✅ Key Features:
+```
+src/
+├── main/
+│   ├── resources/
+│   │   ├── config.properties          # Configuration settings
+│   │   ├── logback.xml               # Logging configuration
+│   │   └── features/                 # Cucumber feature files
+│   └── java/
+│       └── org/example/
+│           ├── core/                 # Core framework classes
+│           │   ├── TestBase.java     # Base test configuration
+│           │   └── BasePage.java     # Base page object
+│           ├── pages/                # Page Object classes
+│           ├── stepDefs/             # Cucumber step definitions
+│           ├── testRunner/           # Test runners
+│           ├── listeners/            # TestNG listeners
+│           └── utils/                # Utility classes
+└── test/
+    └── java/
+        └── org/example/
+            └── [test classes]
+```
 
-    🧪 End-to-end automated test flows
+## 🛠️ Setup & Installation
 
-    🛠️ Page Object Model (POM) structure
+### Prerequisites
+- Java 21 or higher
+- Maven 3.6+
+- Git
 
-    ⚙️ Powerful integration with Selenium and TestNG
+### Installation Steps
 
-    📋 Data-driven testing support
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd FWDEcommerceAutomationApp
+   ```
 
-    🏗️ Scalable and easy to maintain
+2. **Install dependencies**
+   ```bash
+   mvn clean install
+   ```
 
-🛠️ Tech Stack
+3. **Run tests**
+   ```bash
+   # Run all tests
+   mvn test
+   
+   # Run with specific browser
+   mvn test -Dbrowser=firefox
+   
+   # Run with headless mode
+   mvn test -Dbrowser=chrome -Dheadless=true
+   
+   # Run specific tags
+   mvn test -Dcucumber.filter.tags="@smoke"
+   ```
 
-Technology	Purpose
+## 🎯 Configuration
 
-Java ☕	Programming Language
+### Browser Configuration
+Edit `src/main/resources/config.properties`:
 
-Selenium WebDriver 🌐	Web Automation
+```properties
+# Browser settings
+browser=chrome
+headless=false
+window.size=1920x1080
 
-TestNG 🧪	Test Management
+# Timeouts
+implicit.wait=10
+explicit.wait=20
+page.load.timeout=30
 
-Maven 📦	Build and Dependency Management
+# URLs
+base.url=https://demo.nopcommerce.com/
+```
 
-ExtentReports 📊	Test Reporting
+### Parallel Execution
+Configure in `testng.xml`:
 
-Git/GitHub 🐙	Version Control
+```xml
+<suite name="Test Suite" parallel="methods" thread-count="4">
+```
 
-🚀 Getting Started
+## 📊 Reporting
 
-Follow these steps to get the project up and running on your machine! 🖥️
+### Allure Reports
+```bash
+# Generate Allure report
+mvn allure:report
 
-Prerequisites
+# Serve Allure report locally
+mvn allure:serve
+```
 
-    ✅ Java JDK 8+
+### Cucumber Reports
+Reports are automatically generated in:
+- `target/cucumber-reports/cucumber.html`
+- `target/cucumber-reports/cucumber.json`
 
-    ✅ Maven
+### Screenshots
+Failed test screenshots are saved in:
+- `target/screenshots/`
 
-    ✅ ChromeDriver / WebDriver setup
+## 🔧 Framework Components
 
-    ✅ IDE (IntelliJ IDEA / Eclipse)
+### 1. TestBase Class
+Provides common test setup and teardown functionality:
+- WebDriver initialization
+- Browser configuration
+- Timeout management
+- Configuration loading
 
-Installation
+### 2. BasePage Class
+Enhanced page object base with:
+- Common wait methods
+- Element interaction utilities
+- JavaScript executor methods
+- Screenshot capabilities
+- Error handling
 
-    Clone the Repository
+### 3. TestDataManager
+Dynamic test data generation:
+- User registration data
+- Product information
+- Address details
+- Search terms
+- Validation data
 
-git clone https://github.com/omarelbably/FWDEcommerceAutomationApp.git
+### 4. Hooks
+Enhanced test lifecycle management:
+- Automatic screenshots on failure
+- Logging integration
+- Error handling
+- Driver management
 
-    Navigate to the project directory
+## 🧪 Writing Tests
 
-cd FWDEcommerceAutomationApp
+### Feature File Example
+```gherkin
+@smoke
+Feature: User Registration
+  Scenario: Successful user registration
+    Given user is on registration page
+    When user fills registration form with valid data
+    And user submits the form
+    Then registration should be successful
+```
 
-    Install dependencies
+### Step Definition Example
+```java
+@Given("user is on registration page")
+public void userIsOnRegistrationPage() {
+    registrationPage = new RegistrationPage(driver);
+    registrationPage.navigateToRegistrationPage();
+}
+```
 
-mvn clean install
+### Page Object Example
+```java
+public class RegistrationPage extends BasePage {
+    
+    @FindBy(id = "register-button")
+    private WebElement registerButton;
+    
+    public RegistrationPage(WebDriver driver) {
+        super(driver);
+    }
+    
+    public void fillRegistrationForm(Map<String, String> userData) {
+        sendKeysToElement(firstNameField, userData.get("firstName"));
+        sendKeysToElement(lastNameField, userData.get("lastName"));
+        sendKeysToElement(emailField, userData.get("email"));
+        sendKeysToElement(passwordField, userData.get("password"));
+    }
+}
+```
 
-    Run your first test!
+## 🚀 Best Practices
 
-mvn test
+### 1. Page Object Model
+- Keep page objects focused on single responsibility
+- Use meaningful element names
+- Implement proper wait strategies
+- Handle dynamic elements appropriately
 
-📂 Project Structure
+### 2. Test Data Management
+- Use TestDataManager for dynamic data
+- Avoid hardcoded test data
+- Implement data-driven testing where appropriate
+- Use Faker for realistic test data
 
-FWDEcommerceAutomationApp/
+### 3. Error Handling
+- Implement proper exception handling
+- Use soft assertions for multiple validations
+- Add meaningful error messages
+- Implement retry mechanisms for flaky tests
 
-├── src/main/java/
+### 4. Logging
+- Use appropriate log levels
+- Log important test steps
+- Include relevant context in log messages
+- Configure log rotation
 
-│   ├── base/          # Base classes
+## 🔄 CI/CD Integration
 
-│   ├── pages/         # Page Object Models
+### GitHub Actions Example
+```yaml
+name: Test Automation
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+      - name: Run tests
+        run: mvn test
+      - name: Generate Allure report
+        run: mvn allure:report
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: target/site/allure-maven-plugin/
+```
 
-│   ├── utils/         # Utilities (helpers, listeners, etc.)
+## 📈 Performance Optimization
 
-├── src/test/java/
+### 1. Parallel Execution
+- Configure appropriate thread count
+- Use thread-safe page objects
+- Avoid shared state between tests
 
-│   ├── tests/         # Test Cases
+### 2. Browser Optimization
+- Use headless mode for CI/CD
+- Implement proper driver cleanup
+- Configure browser options for performance
 
-├── pom.xml            # Maven Config File
+### 3. Test Data Optimization
+- Use efficient data generation
+- Implement data caching where appropriate
+- Clean up test data after tests
 
-├── testng.xml         # TestNG Suite Config
+## 🐛 Troubleshooting
 
-└── README.md          # Project Documentation
+### Common Issues
 
-🧩 How to Contribute
+1. **Driver Issues**
+   - Ensure WebDriverManager is properly configured
+   - Check browser compatibility
+   - Verify driver path configuration
 
-We welcome contributions with open arms! 🤗
+2. **Element Not Found**
+   - Implement proper wait strategies
+   - Check element locators
+   - Verify page load completion
 
-    Fork the repo 🍴
+3. **Test Failures**
+   - Check logs for detailed error messages
+   - Review screenshots for visual verification
+   - Verify test data validity
 
-    Create your feature branch (git checkout -b feature/AmazingFeature) 🌟
+## 📚 Additional Resources
 
-    Commit your changes (git commit -m 'Add some AmazingFeature') 💬
+- [Selenium Documentation](https://selenium.dev/documentation/)
+- [Cucumber Documentation](https://cucumber.io/docs/)
+- [TestNG Documentation](https://testng.org/doc/)
+- [Allure Documentation](https://docs.qameta.io/allure/)
 
-    Push to the branch (git push origin feature/AmazingFeature) 🚀
+## 🤝 Contributing
 
-    Open a Pull Request 📥
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
 
-🎯 Roadmap
+## 📄 License
 
-Implement basic E-commerce flows automation
-
-Add detailed ExtentReports integration
-
-Expand test coverage to mobile platforms 📱
-
-Integrate with CI/CD pipelines (GitHub Actions, Jenkins) ⚙️
-
-    Add video recording for failed tests 🎥
-
-📢 Contact
-
-Omar Elbably
-📧 Email: Omaroelbably@gmail.com
-💼 LinkedIn: https://www.linkedin.com/in/omaroelbably
-🌟 Show Your Support
-
-If you like this project, please ⭐ Star it and share it with others!
-Together, let's make E-commerce testing smarter! 🔥
-
-    Built with 💙 and dedication by Omar Elbably.
+This project is licensed under the MIT License - see the LICENSE file for details.
 

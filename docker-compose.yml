@@ -1,0 +1,161 @@
+version: '3.8'
+
+services:
+  # Test Automation Framework
+  test-automation:
+    build: .
+    container_name: ecommerce-test-automation
+    environment:
+      - JAVA_OPTS=-Xmx2g -Xms1g
+      - MAVEN_OPTS=-Xmx2g -Xms1g
+      - DISPLAY=:99
+      - BROWSER=chrome
+      - HEADLESS=true
+    volumes:
+      - ./target:/app/target
+      - ./src/main/resources:/app/src/main/resources
+      - ./reports:/app/reports
+    networks:
+      - test-network
+    depends_on:
+      - selenium-hub
+    command: mvn test -Dcucumber.filter.tags="@smoke"
+
+  # Selenium Grid Hub
+  selenium-hub:
+    image: selenium/hub:4.15.0
+    container_name: selenium-hub
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+    environment:
+      - GRID_MAX_SESSION=16
+      - GRID_BROWSER_TIMEOUT=300
+      - GRID_TIMEOUT=300
+    networks:
+      - test-network
+
+  # Chrome Node
+  chrome-node:
+    image: selenium/node-chrome:4.15.0
+    container_name: chrome-node
+    shm_size: 2gb
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+    depends_on:
+      - selenium-hub
+    networks:
+      - test-network
+
+  # Firefox Node
+  firefox-node:
+    image: selenium/node-firefox:4.15.0
+    container_name: firefox-node
+    shm_size: 2gb
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+    depends_on:
+      - selenium-hub
+    networks:
+      - test-network
+
+  # Allure Report Server
+  allure-server:
+    image: frankescobar/allure-docker-service
+    container_name: allure-server
+    ports:
+      - "5050:5050"
+    environment:
+      - CHECK_RESULTS_EVERY_SECONDS=1
+      - KEEP_HISTORY=1
+    volumes:
+      - ./target/allure-results:/app/allure-results
+      - ./target/allure-reports:/app/default-reports
+    networks:
+      - test-network
+
+  # Test Results Dashboard (Optional)
+  test-dashboard:
+    image: grafana/grafana:latest
+    container_name: test-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - test-network
+
+  # Test Data Database (Optional)
+  test-db:
+    image: postgres:15
+    container_name: test-db
+    environment:
+      - POSTGRES_DB=testdb
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - test-network
+
+  # Redis Cache (Optional)
+  redis:
+    image: redis:7-alpine
+    container_name: redis-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - test-network
+
+  # Monitoring Stack (Optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - test-network
+
+  # Test Execution Monitor
+  test-monitor:
+    build: .
+    container_name: test-monitor
+    environment:
+      - MONITORING_ENABLED=true
+      - PROMETHEUS_ENDPOINT=http://prometheus:9090
+    volumes:
+      - ./target:/app/target
+    networks:
+      - test-network
+    command: mvn test -Dcucumber.filter.tags="@monitoring"
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  grafana-storage:
+  postgres-data:
+  redis-data:
+  prometheus-data: 

@@ -1,78 +1,243 @@
 package org.example.pages;
 
-import org.example.stepDefs.Hooks;
+import org.example.core.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class P01_register {
-    WebDriver driver;
-
-    public P01_register(WebDriver driver)
-    {
-        this.driver = driver;
+public class P01_register extends BasePage {
+    
+    private static final Logger logger = LoggerFactory.getLogger(P01_register.class);
+    
+    // Page elements
+    @FindBy(css = "a[class=\"ico-register\"]")
+    private WebElement registerLink;
+    
+    @FindBy(id = "gender-male")
+    private WebElement maleGender;
+    
+    @FindBy(id = "gender-female")
+    private WebElement femaleGender;
+    
+    @FindBy(id = "FirstName")
+    private WebElement firstName;
+    
+    @FindBy(id = "LastName")
+    private WebElement lastName;
+    
+    @FindBy(id = "Password")
+    private WebElement password;
+    
+    @FindBy(id = "ConfirmPassword")
+    private WebElement passwordCon;
+    
+    @FindBy(id = "Email")
+    private WebElement email;
+    
+    @FindBy(id = "register-button")
+    private WebElement regButton;
+    
+    @FindBy(className = "result")
+    private WebElement successMSG;
+    
+    @FindBy(css = ".message-error")
+    private WebElement errorMessage;
+    
+    @FindBy(name = "DateOfBirthDay")
+    private WebElement dayDropdown;
+    
+    @FindBy(name = "DateOfBirthMonth")
+    private WebElement monthDropdown;
+    
+    @FindBy(name = "DateOfBirthYear")
+    private WebElement yearDropdown;
+    
+    public P01_register(WebDriver driver) {
+        super(driver);
         PageFactory.initElements(driver, this);
     }
-    public WebElement registerlink()
-    {
-        return Hooks.driver.findElement(By.cssSelector("a[class=\"ico-register\"]"));
+    
+    // Navigation methods
+    public void navigateToRegistrationPage() {
+        logger.info("Navigating to registration page");
+        driver.get(getBaseUrl() + "/register");
+        waitForElementVisible(registerLink);
+        logger.info("Registration page loaded successfully");
     }
-
-    public WebElement maleGender(){
-        return Hooks.driver.findElement(By.id("gender-male"));
+    
+    public void clickRegisterLink() {
+        logger.info("Clicking register link");
+        clickElement(registerLink);
+        waitForElementVisible(firstName);
+        logger.info("Register link clicked successfully");
     }
-    public WebElement firstName(){
-        return Hooks.driver.findElement(By.id("FirstName"));
-
+    
+    // Gender selection methods
+    public void selectMaleGender() {
+        logger.info("Selecting male gender");
+        clickElement(maleGender);
+        logger.info("Male gender selected successfully");
     }
-    public WebElement lastName(){
-        return Hooks.driver.findElement(By.id("LastName"));
+    
+    public void selectFemaleGender() {
+        logger.info("Selecting female gender");
+        clickElement(femaleGender);
+        logger.info("Female gender selected successfully");
     }
-    public WebElement password(){
-        return Hooks.driver.findElement(By.id("Password"));
-
+    
+    // Form filling methods
+    public void fillNames(String firstName, String lastName) {
+        logger.info("Filling names: firstName={}, lastName={}", firstName, lastName);
+        sendKeysToElement(this.firstName, firstName);
+        sendKeysToElement(this.lastName, lastName);
+        logger.info("Names filled successfully");
     }
-    public WebElement passwordCon(){
-        return Hooks.driver.findElement(By.id("ConfirmPassword"));
+    
+    public void fillPassword(String firstPw, String secondPw) {
+        logger.info("Filling password fields");
+        sendKeysToElement(password, firstPw);
+        sendKeysToElement(passwordCon, secondPw);
+        logger.info("Password fields filled successfully");
     }
-
-    public WebElement email(){
-        return Hooks.driver.findElement(By.id("Email"));
+    
+    public void enterEmail(String emailAddress) {
+        logger.info("Entering email: {}", emailAddress);
+        sendKeysToElement(email, emailAddress);
+        logger.info("Email entered successfully");
     }
-    public WebElement regButton(){
-        return Hooks.driver.findElement(By.id("register-button"));
-    }
-    public WebElement successMSG(){
-        return Hooks.driver.findElement(By.className("result"));
-    }
-    public void birthDate()
-    {
-        Select day = new Select(Hooks.driver.findElement(By.name("DateOfBirthDay")));
+    
+    public void birthDate() {
+        logger.info("Setting birth date");
+        Select day = new Select(dayDropdown);
         day.selectByValue("4");
-        Select month = new Select(Hooks.driver.findElement(By.name("DateOfBirthMonth")));
+        Select month = new Select(monthDropdown);
         month.selectByValue("5");
-        Select year = new Select(Hooks.driver.findElement(By.name("DateOfBirthYear")));
+        Select year = new Select(yearDropdown);
         year.selectByValue("1996");
+        logger.info("Birth date set successfully");
     }
-
-
-
-    public void fillNames(String firstName, String lastName){
-
-        // Enter Firstname
-        firstName().sendKeys(firstName);
-        // enter last name
-        lastName().sendKeys(lastName);
+    
+    public void setBirthDate(String day, String month, String year) {
+        logger.info("Setting custom birth date: day={}, month={}, year={}", day, month, year);
+        Select daySelect = new Select(dayDropdown);
+        daySelect.selectByValue(day);
+        Select monthSelect = new Select(monthDropdown);
+        monthSelect.selectByValue(month);
+        Select yearSelect = new Select(yearDropdown);
+        yearSelect.selectByValue(year);
+        logger.info("Custom birth date set successfully");
     }
-    public void fillPassword(String firstPw, String secondPw){
-
-        // Enter Firstname
-        password().sendKeys(firstPw);
-        // enter last name
-        passwordCon().sendKeys(secondPw);
+    
+    // Action methods
+    public void clickRegisterButton() {
+        logger.info("Clicking register button");
+        clickElement(regButton);
+        logger.info("Register button clicked successfully");
     }
-
+    
+    // Business logic methods
+    public void registerUser(String firstName, String lastName, String email, String password) {
+        logger.info("Registering user with email: {}", email);
+        fillNames(firstName, lastName);
+        enterEmail(email);
+        fillPassword(password, password);
+        clickRegisterButton();
+        logger.info("User registration completed");
+    }
+    
+    public void registerUserWithGender(String firstName, String lastName, String email, 
+                                     String password, String gender) {
+        logger.info("Registering user with gender: {}", gender);
+        if ("male".equalsIgnoreCase(gender)) {
+            selectMaleGender();
+        } else if ("female".equalsIgnoreCase(gender)) {
+            selectFemaleGender();
+        }
+        registerUser(firstName, lastName, email, password);
+    }
+    
+    // Validation methods
+    public boolean isRegistrationPageDisplayed() {
+        return isElementDisplayed(firstName) && isElementDisplayed(lastName) && 
+               isElementDisplayed(email) && isElementDisplayed(password);
+    }
+    
+    public boolean isSuccessMessageDisplayed() {
+        return isElementDisplayed(successMSG);
+    }
+    
+    public boolean isErrorMessageDisplayed() {
+        return isElementDisplayed(errorMessage);
+    }
+    
+    // Getter methods
+    public String getSuccessMessage() {
+        return getElementText(successMSG);
+    }
+    
+    public String getErrorMessage() {
+        return getElementText(errorMessage);
+    }
+    
+    public WebElement getSuccessMSG() {
+        return successMSG;
+    }
+    
+    public WebElement getErrorMessageElement() {
+        return errorMessage;
+    }
+    
+    // Form validation methods
+    public boolean isFirstNameFieldDisplayed() {
+        return isElementDisplayed(firstName);
+    }
+    
+    public boolean isLastNameFieldDisplayed() {
+        return isElementDisplayed(lastName);
+    }
+    
+    public boolean isEmailFieldDisplayed() {
+        return isElementDisplayed(email);
+    }
+    
+    public boolean isPasswordFieldDisplayed() {
+        return isElementDisplayed(password);
+    }
+    
+    public boolean isConfirmPasswordFieldDisplayed() {
+        return isElementDisplayed(passwordCon);
+    }
+    
+    public boolean isRegisterButtonEnabled() {
+        return regButton.isEnabled();
+    }
+    
+    // Form clearing methods
+    public void clearRegistrationForm() {
+        logger.info("Clearing registration form");
+        firstName.clear();
+        lastName.clear();
+        email.clear();
+        password.clear();
+        passwordCon.clear();
+        logger.info("Registration form cleared successfully");
+    }
+    
+    // Wait methods
+    public void waitForRegistrationComplete() {
+        logger.info("Waiting for registration to complete");
+        waitForElementVisible(successMSG);
+        logger.info("Registration completed");
+    }
+    
+    public void waitForErrorMessage() {
+        logger.info("Waiting for error message");
+        waitForElementVisible(errorMessage);
+        logger.info("Error message displayed");
+    }
 }
