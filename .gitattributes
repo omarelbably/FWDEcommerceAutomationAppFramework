@@ -1,19 +1,19 @@
-# Mark node modules and vendor directories as vendored
-node_modules/** linguist-vendored
-vendor/** linguist-vendored
+# Ignore build artifacts and vendor directories (exclude from language stats)
+dist/** linguist-vendored=true
+build/** linguist-vendored=true
+target/** linguist-vendored=true
+out/** linguist-vendored=true
+public/** linguist-vendored=true
+node_modules/** linguist-vendored=true
 
-# Mark common build / distribution output as generated
-dist/** linguist-generated
-build/** linguist-generated
-public/dist/** linguist-generated
-public/js/** linguist-generated
-assets/** linguist-generated
+# Mark docs/readme/website HTML as documentation (excluded)
+docs/** linguist-documentation=true
+*.md linguist-documentation=true
+docs/**/*.html linguist-documentation=true
+*.html linguist-documentation=false
 
-# Minified / bundle files
-*.min.js linguist-generated
-*.bundle.js linguist-generated
-*.map linguist-generated
+# If you really want to force classification for specific paths, you can:
+# src/** linguist-language=Java
 
-# Lockfiles and package files that might bias analysis
-package-lock.json linguist-vendored
-yarn.lock linguist-vendored
+# If some files are generated, mark them generated (another way to exclude)
+**/*.min.js linguist-generated=true
